@@ -57,14 +57,15 @@ function viewAllEmployees() {
   INNER JOIN department ON department.id = role.department_id`, function (err, res) {
     if (err) throw err;
     console.log("wtf");
-    function Person(first_name, last_name, title, salary, name) {
+    function Person(id, first_name, last_name, title, salary, name) {
+      this.id = id;
       this.first_name = first_name;
       this.last_name = last_name;
       this.title = title;
       this.salary = salary;
       this.name = name;
     }
-    var data = new Person(res.first_name, res.last_name, res.title, res.salary, res.name);
+    var data = new Person(res.id, res.first_name, res.last_name, res.title, res.salary, res.name);
     console.table([data]);
     // for (let i = 0; i < res.length; i++) {
     //   console.log("here?");
