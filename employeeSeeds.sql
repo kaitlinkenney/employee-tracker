@@ -25,3 +25,12 @@ CREATE TABLE employee (
   role_id INT,
   PRIMARY KEY (id)
 );
+
+INSERT INTO department (name)
+VALUES ("awesomeness");
+
+INSERT INTO role (title, salary)
+VALUES ("boss", "1.50");
+
+INSERT INTO employee (first_name, last_name)
+VALUES ("Kaitlin", "Kenney");
