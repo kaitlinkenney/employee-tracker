@@ -33,12 +33,12 @@ function start() {
         choices: ["View all employees", "Update employee role", "Add employee"]
     })
     .then(function (answer) {
-      if (answer.navigate === "View all employees") {
+      if (answer.navigate === "View all employees"){
         viewAllEmployees();
       }
-      // else if (answer.nagivate === "Update employee role") {
-      //   updateRole();
-      // }
+      else if (answer.nagivate === "Update employee role") {
+        updateRole();
+      }
       else{
         addEmployee();
       } 
@@ -54,50 +54,61 @@ function viewAllEmployees() {
   department.name
   FROM employee
   INNER JOIN role ON role.id = employee.role_id
-  INNER JOIN department ON department.id = role.department_id`,
-      function (err, res) {
+  INNER JOIN department ON department.id = role.department_id`, function (err, res) {
     if (err) throw err;
-    for (let i = 0; i < res.length; i++) {
-      console.log(res[i].first_name + " | " + res[i].last_name + " | " + res[i].tile + "|" + res[i].salary + "|" + res[i].name);
-      returnHome();
-    }
+    console.log("wtf");
+    // for (let i = 0; i < res.length; i++) {
+    //   console.log("here?");
+      console.log(res.first_name + " | " + res.last_name + " | " + res.tile + "|" + res.salary + "|" + res.name);
+      // returnHome();
+    // }
   });
 }
 
-// function updateRole() {
-//   inquirer
-//     .prompt([
-//       {
-//         name: "udpateName",
-//         type: "input",
-//         message: "What is the employee's last name?"
-//       },
-//       {
-//         name: "updateRole",
-//         type: "input",
-//         message: "What is the employee's updated role?"
-//       },
-//     ])
-//     .then(function (answer) {
-//       connection.query(
-//         "UPDATE roles SET ? WHERE ?",
-//         [
-//           {
-//             title: answer.updateRole
-//           },
-//           {
-//             last_name: answer.updateName
-//           }
-//         ],
-//         function (err, res) {
-//           if (err) throw err;
-//           console.log(res.affectedRows + "employee(s) updated.\n");
-//           returnHome();
-//         }
-//       )
-//     });
-//   console.log(query.sql);
-// }
+function updateRole() {
+  connection.query(`SELECT
+  employee.first_name,
+  employee.last_name,
+  role.title,
+  role.salary,
+  department.name
+  FROM employee
+  INNER JOIN role ON role.id = employee.role_id
+  INNER JOIN department ON department.id = role.department_id`, function (err, res){
+    if (err) throw err;
+  inquirer
+    .prompt([
+      {
+        name: "udpateName",
+        type: "input",
+        message: "What is the employee's last name?"
+      },
+      {
+        name: "updateRole",
+        type: "input",
+        message: "What is the employee's updated role?"
+      },
+    ])
+    .then(function (answer) {
+      connection.query(
+        "UPDATE roles SET ? WHERE ?",
+        [
+          {
+            title: answer.updateRole
+          },
+          {
+            last_name: answer.updateName
+          }
+        ],
+        function (err, res) {
+          if (err) throw err;
+          console.log(res.affectedRows + "employee(s) updated.\n");
+          // returnHome();
+        }
+      )
+    });
+  });
+}
 
 function addEmployee() {
   inquirer
@@ -129,18 +140,24 @@ function addEmployee() {
       }
     ])
     .then(function (answer) {
-      var query = connection.query(
-        "INSERT INTO department SET ?",
+      connection.query(
+        "INSERT INTO employee SET ?",
         [
           {
             first_name: answer.addFirst
           },
           {
             last_name: answer.addLast
-          },
+          }
+        ],
+        "INSERT INTO department SET ?",
+        [
           {
             name: answer.addDept
-          },
+          }
+        ],
+        "INSERT INTO role SET ?",
+        [
           {
             title: answer.addTitle
           },
@@ -154,7 +171,7 @@ function addEmployee() {
           // returnHome();
         }
       )
-      console.log(query.sql);
+      // console.log(query.sql);
     });
 }
 

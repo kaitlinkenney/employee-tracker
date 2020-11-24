@@ -25,12 +25,3 @@ CREATE TABLE employee (
   role_id INT,
   PRIMARY KEY (id)
 );
-
-INSERT INTO department (name) values ('Department1');
-INSERT INTO department (name) values ('Department2');
-
-INSERT INTO roles (title, salary, department_id) values ('role1', '5.50', 1);
-INSERT INTO roles (title, salary, department_id) values ('role2', '6.50', 2);
-
-INSERT INTO employee (first_name, last_name, role_id) values ('firstName1', 'lastName1', 1);
-INSERT INTO employee (first_name, last_name, role_id) values ('firstName2', 'lastName2', 2);
