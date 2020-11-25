@@ -59,21 +59,20 @@ function viewAllEmployees() {
     if (err) throw err;
     console.log("hi");
     // console.log(res[0].first_name)
+    for (let i = 0; i < res.length; i++) {
     function Person(id, first_name, last_name, title, salary, name) {
-      this.id = res[0].id;
-      this.first_name = res[0].first_name;
-      this.last_name = res[0].last_name;
-      this.title = res[0].title;
-      this.salary = res[0].salary;
-      this.name = res[0].name;
+      this.id = res[i].id;
+      this.first_name = res[i].first_name;
+      this.last_name = res[i].last_name;
+      this.title = res[i].title;
+      this.salary = res[i].salary;
+      this.name = res[i].name;
     }
     var data = new Person(res.id, res.first_name, res.last_name, res.title, res.salary, res.name);
     console.table([data]);
-    // for (let i = 0; i < res.length; i++) {
     //   console.log("here?");
-      // console.log(res.first_name + " | " + res.last_name + " | " + res.tile + "|" + res.salary + "|" + res.name);
       // returnHome();
-    // }
+    }
   });
 }
 
