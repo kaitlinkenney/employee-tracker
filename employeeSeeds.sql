@@ -28,6 +28,14 @@ CREATE TABLE employee (
   CONSTRAINT fk_manager FOREIGN KEY (manager_id) REFERENCES employee(id) ON DELETE SET NULL
 );
 
+INSERT INTO department (name)
+VALUES ("coolness");
+
+INSERT INTO role (title, salary, department_id)
+VALUES ("Sales Lead", 1000, 1);
+
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("Kaitlin", "Kenney", 1);
 
 
 

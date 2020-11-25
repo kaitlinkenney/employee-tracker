@@ -51,21 +51,21 @@ function viewAllEmployees() {
   employee.last_name,
   role.title,
   role.salary,
-  department.name
+  department.name,
+  department.id
   FROM employee
   LEFT JOIN role ON employee.role_id = role.id
   LEFT JOIN department ON role.department_id = department.id`, function (err, res) {
     if (err) throw err;
     console.log("hi");
-
     // console.log(res[0].first_name)
     function Person(id, first_name, last_name, title, salary, name) {
-      this.id = id;
+      this.id = res[0].id;
       this.first_name = res[0].first_name;
-      this.last_name = last_name;
-      this.title = title;
-      this.salary = salary;
-      this.name = name;
+      this.last_name = res[0].last_name;
+      this.title = res[0].title;
+      this.salary = res[0].salary;
+      this.name = res[0].name;
     }
     var data = new Person(res.id, res.first_name, res.last_name, res.title, res.salary, res.name);
     console.table([data]);
@@ -137,8 +137,9 @@ function addEmployee() {
       },
       {
         name: "addDept",
-        type: "input",
-        message: "Enter the employee's department name:"
+        type: "list",
+        message: "Please choose the desired department:",
+        choices: ["Sales", "Engineering", "Finance", "Legal"]
       },
       {
         name: "addTitle",
