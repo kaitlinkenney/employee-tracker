@@ -33,15 +33,18 @@ function start() {
         choices: ["View all employees", "Update employee role", "Add employee"]
     })
     .then(function (answer) {
+      console.log(answer);
       if (answer.navigate === "View all employees"){
         viewAllEmployees();
       }
-      else if (answer.nagivate === "Update employee role") {
+      else if (answer.navigate === "Update employee role") {
         updateRole();
       }
-      else{
+      else if (answer.navigate === "Add employee") {
         addEmployee();
-      } 
+      } else{
+        console.log(answer.navigate);
+      }
     });
 }
 
@@ -60,13 +63,13 @@ function viewAllEmployees() {
     console.log("hi");
     // console.log(res[0].first_name)
     for (let i = 0; i < res.length; i++) {
-    function Person(id, first_name, last_name, title, salary, name) {
+    function Person(id, first_name, last_name, title, salary, department_name) {
       this.id = res[i].id;
       this.first_name = res[i].first_name;
       this.last_name = res[i].last_name;
       this.title = res[i].title;
       this.salary = res[i].salary;
-      this.name = res[i].name;
+      this.department_name = res[i].name;
     }
     var data = new Person(res.id, res.first_name, res.last_name, res.title, res.salary, res.name);
     console.table([data]);
@@ -82,10 +85,11 @@ function updateRole() {
   employee.last_name,
   role.title,
   role.salary,
-  department.name
+  department.name,
+  department.id
   FROM employee
-  LEFT JOIN role ON role.id = employee.role_id
-  LEFT JOIN department ON department.id = role.department_id`, function (err, res){
+  LEFT JOIN role ON employee.role_id = role.id
+  LEFT JOIN department ON role.department_id = department.id`, function (err, res){
     if (err) throw err;
   inquirer
     .prompt([
@@ -96,25 +100,27 @@ function updateRole() {
       },
       {
         name: "updateRole",
-        type: "input",
-        message: "What is the employee's updated role?"
+        type: "list",
+        message: "What is the employee's updated role?",
+        choices: ["Sales Lead", "Accountant"]
       },
     ])
     .then(function (answer) {
       connection.query(
-        "UPDATE roles SET ? WHERE ?",
-        [
-          {
-            title: answer.updateRole
-          },
-          {
-            last_name: answer.updateName
-          }
-        ],
+        "UPDATE employee SET role_id = ? WHERE id = ?",
+        [ 1, 2],
+          // {
+          //   role_id: 1
+          // },
+          // {
+          //   id: 2
+          // }
+        // ],
         function (err, res) {
           if (err) throw err;
           console.log(res.affectedRows + "employee(s) updated.\n");
           // returnHome();
+          start();
         }
       )
     });
@@ -136,9 +142,9 @@ function addEmployee() {
       },
       {
         name: "addDept",
-        type: "list",
-        message: "Please choose the desired department:",
-        choices: ["Sales", "Engineering", "Finance", "Legal"]
+        type: "input",
+        message: "Please choose the desired department:"
+        // choices: ["Sales", "Engineering", "Finance", "Legal"]
       },
       {
         name: "addTitle",
@@ -149,35 +155,50 @@ function addEmployee() {
         name: "addSalary",
         type: "input",
         message: "Enter the employee's salary:"
+      },
+      {
+        name: "promptRole",
+        type: "list",
+        message: "Which role?",
+        choices: ["Accountant", "Sales Lead"]
       }
     ])
     .then(function (answer) {
+      connection.query(
+      `SELECT * FROM role`, function(err, res) {
+        let roleId;
+        console.log(res);
+        for (let i = 0; i < res.length; i++) {
+          if (res[i].title === answer.promptRole){
+            roleId = res[i].id;
+          }
+        }
+        if (err) throw err;
       console.log(answer);
       connection.query(
         "INSERT INTO employee SET ?",
         [
           {
-            first_name: answer.addFirst
-          },
-          {
-            last_name: answer.addLast
+            first_name: answer.addFirst,
+            last_name: answer.addLast,
+            role_id: roleId
           }
         ],
-        "INSERT INTO department SET ?",
-        [
-          {
-            name: answer.addDept
-          }
-        ],
-        "INSERT INTO role SET ?",
-        [
-          {
-            title: answer.addTitle
-          },
-          {
-            salary: answer.addSalary
-          }
-        ],
+        // "INSERT INTO department SET ?",
+        // [
+        //   {
+        //     name: answer.addDept
+        //   }
+        // ],
+        // "INSERT INTO role SET ?",
+        // [
+        //   {
+        //     title: answer.addTitle
+        //   },
+        //   {
+        //     salary: answer.addSalary
+        //   }
+        // ],
         function (err, res) {
           if (err) throw err;
           console.log(res.affectedRows + " employee added!\n");
@@ -185,9 +206,9 @@ function addEmployee() {
         }
       )
       // console.log(query.sql);
+    })
     });
-}
-
+  }
 // function returnHome() {
 //   inquirer
 //     .prompt({

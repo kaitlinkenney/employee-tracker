@@ -27,7 +27,7 @@ CREATE TABLE employee (
 );
 
 INSERT INTO department (name)
-VALUES ("coolness");
+VALUES ("sales");
 
 INSERT INTO role (title, salary, department_id)
 VALUES ("Sales Lead", 1000, 1);
@@ -36,7 +36,7 @@ INSERT INTO employee (first_name, last_name, role_id)
 VALUES ("Kaitlin", "Kenney", 1);
 
 INSERT INTO department (name)
-VALUES ("awesomeness");
+VALUES ("finance");
 
 INSERT INTO role (title, salary, department_id)
 VALUES ("Accountant", 2000, 2);
