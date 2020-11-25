@@ -58,10 +58,10 @@ function viewAllEmployees() {
     if (err) throw err;
     console.log("hi");
 
-    console.log(res[0].first_name)
+    // console.log(res[0].first_name)
     function Person(id, first_name, last_name, title, salary, name) {
       this.id = id;
-      this.first_name = first_name;
+      this.first_name = res[0].first_name;
       this.last_name = last_name;
       this.title = title;
       this.salary = salary;
