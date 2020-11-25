@@ -53,10 +53,12 @@ function viewAllEmployees() {
   role.salary,
   department.name
   FROM employee
-  INNER JOIN role ON role.id = employee.role_id
-  INNER JOIN department ON department.id = role.department_id`, function (err, res) {
+  LEFT JOIN role ON employee.role_id = role.id
+  LEFT JOIN department ON role.department_id = department.id`, function (err, res) {
     if (err) throw err;
-    console.log("wtf");
+    console.log("hi");
+
+    console.log(res[0].first_name)
     function Person(id, first_name, last_name, title, salary, name) {
       this.id = id;
       this.first_name = first_name;
@@ -83,8 +85,8 @@ function updateRole() {
   role.salary,
   department.name
   FROM employee
-  INNER JOIN role ON role.id = employee.role_id
-  INNER JOIN department ON department.id = role.department_id`, function (err, res){
+  LEFT JOIN role ON role.id = employee.role_id
+  LEFT JOIN department ON department.id = role.department_id`, function (err, res){
     if (err) throw err;
   inquirer
     .prompt([
@@ -150,6 +152,7 @@ function addEmployee() {
       }
     ])
     .then(function (answer) {
+      console.log(answer);
       connection.query(
         "INSERT INTO employee SET ?",
         [
