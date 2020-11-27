@@ -90,40 +90,45 @@ function updateRole() {
         }
       ])
       .then(function (answer) {
-        let rolesId = res[0].role_id;
+        let newName = answer.updateName;
+        let rolesId;
         switch (answer.updateRole) {
           case "Sales Lead":
-            rolesId === 1;
-            break;
+            rolesId = 1;
+            update(rolesId, newName);
           case "Accountant":
-            rolesId === 2;
-            break;
+            rolesId = 2;
+            update(rolesId, newName);
           case "Lawyer":
-            rolesId === 3;
-            break;
+            rolesId = 3;
+            update(rolesId, newName);
           case "Engineer":
-            rolesId === 4;
-            break;
+            rolesId = 4;
+            update(rolesId, newName);
         }
-        connection.query(
-          "UPDATE employee SET ? WHERE ?",
-          [{role_id: rolesId}, {last_name: answer.updateName}],
-          // {
-          //   role_id: 1
-          // },
-          // {
-          //   id: 2
-          // }
-          // ],
-          function (err, res) {
-            if (err) throw err;
-            console.log(res.affectedRows + "employee(s) updated.\n");
-            // start();
-          }
-
-        )
+        // console.log(answer.updateName);
       });
   });
+}
+
+function update(rolesId, newName){
+  connection.query(
+    "UPDATE employee SET ? WHERE ?",
+    [{role_id: rolesId}, {last_name: newName}],
+    // {
+    //   role_id: 1
+    // },
+    // {
+    //   id: 2
+    // }
+    // ],
+    function (err, res) {
+      if (err) throw err;
+      console.log(res.affectedRows + "employee(s) updated.\n");
+      // start();
+    }
+
+  )
 }
 
 function addEmployee() {
