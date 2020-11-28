@@ -6,8 +6,6 @@ Developers are often tasked with creating interfaces that make it easy for non-d
 
 Design the following database schema containing three tables:
 
-![Database Schema](Assets/schema.png)
-
 * **department**:
 
   * **id** - INT PRIMARY KEY
@@ -66,8 +64,6 @@ How do you deliver this? Here are some guidelines:
 * You may wish to have a separate file containing functions for performing specific SQL queries you'll need to use. Could a constructor function or a class be helpful for organizing these?
 
 * You will need to perform a variety of SQL JOINS to complete this assignment, and it's recommended you review the week's activities if you need a refresher on this.
-
-![Employee Tracker](Assets/employee-tracker.gif)
 
 ### Hints
 
@@ -137,6 +133,6 @@ You are required to submit the following:
 - - -
 © 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
 
-screenshot:
+screenshot: <img width="958" alt="screenshot employeesjs" src="https://user-images.githubusercontent.com/67657449/100479074-23a58600-30bb-11eb-89f1-ba7e0013963e.png">
 
-link to deployed application: 
+link to Screencastify video: https://drive.google.com/file/d/1xXyLaf4u4RRK14tvGena3PUyo4k8OgFC/view
