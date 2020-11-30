@@ -62,7 +62,6 @@ function viewAllEmployees() {
       let data = new Person(res.id, res.first_name, res.last_name, res.title, res.salary, res.name);
       console.table([data]);
     }
-    start();
   });
 }
 
@@ -166,10 +165,8 @@ function addEmployee() {
             function (err, res) {
               if (err) throw err;
               console.log(res.affectedRows + " employee added!\n");
-              start();
             }
           )
         })
     });
 }
-
