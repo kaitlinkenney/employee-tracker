@@ -83,21 +83,34 @@ function updateRole() {
         }
       ])
       .then(function (answer) {
+        console.log(answer);
         let newName = answer.updateName;
         let rolesId;
+        console.log(answer.updateRole);
         switch (answer.updateRole) {
           case "Sales Lead":
             rolesId = 1;
             update(rolesId, newName);
+            console.log("sales lead");
+            break;
           case "Accountant":
             rolesId = 2;
             update(rolesId, newName);
+            console.log("accountant");
+            break;
           case "Lawyer":
             rolesId = 3;
             update(rolesId, newName);
+            console.log("lawyer");
+            break;
           case "Engineer":
             rolesId = 4;
             update(rolesId, newName);
+            console.log("engineer");
+            break;
+          default: 
+            console.log("did it break?");
+            break;
         }
       });
   });
@@ -145,7 +158,8 @@ function addEmployee() {
       connection.query(
         `SELECT * FROM role`, function (err, res) {
           let roleId;
-
+          console.log(res);
+          //checking if title == answer.promptrole
           for (let i = 0; i < res.length; i++) {
             if (res[i].title === answer.promptRole) {
               roleId = res[i].id;
