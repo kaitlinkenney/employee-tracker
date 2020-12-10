@@ -18,6 +18,7 @@ connection.connect(function (err) {
   start();
 });
 
+//gives user the first prompt and directs them to the next function
 function start() {
   inquirer
     .prompt({
@@ -38,6 +39,7 @@ function start() {
     });
 }
 
+//views all employees via a left table join
 function viewAllEmployees() {
   connection.query(`SELECT
   employee.first_name,
@@ -65,6 +67,7 @@ function viewAllEmployees() {
   });
 }
 
+//update an employee's role using a switch statement to assign the employee a new role ID
 function updateRole() {
   connection.query("SELECT * FROM employee", function (err, res) {
     if (err) throw err;
@@ -83,39 +86,31 @@ function updateRole() {
         }
       ])
       .then(function (answer) {
-        console.log(answer);
         let newName = answer.updateName;
         let rolesId;
-        console.log(answer.updateRole);
         switch (answer.updateRole) {
           case "Sales Lead":
             rolesId = 1;
             update(rolesId, newName);
-            console.log("sales lead");
             break;
           case "Accountant":
             rolesId = 2;
             update(rolesId, newName);
-            console.log("accountant");
             break;
           case "Lawyer":
             rolesId = 3;
             update(rolesId, newName);
-            console.log("lawyer");
             break;
           case "Engineer":
             rolesId = 4;
             update(rolesId, newName);
-            console.log("engineer");
-            break;
-          default: 
-            console.log("did it break?");
             break;
         }
       });
   });
 }
 
+//updates the corresponding employee based from results of the switch statement
 function update(rolesId, newName) {
   connection.query(
     "UPDATE employee SET ? WHERE ?",
@@ -128,6 +123,7 @@ function update(rolesId, newName) {
   )
 }
 
+//adds a new employee
 function addEmployee() {
   inquirer
     .prompt([
@@ -158,8 +154,7 @@ function addEmployee() {
       connection.query(
         `SELECT * FROM role`, function (err, res) {
           let roleId;
-          console.log(res);
-          //checking if title == answer.promptrole
+          //loops through until the user's answer matches a job role in the table
           for (let i = 0; i < res.length; i++) {
             if (res[i].title === answer.promptRole) {
               roleId = res[i].id;
