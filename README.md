@@ -58,4 +58,4 @@ So that I can organize and plan my business
 
 screenshot: <img width="958" alt="screenshot employeesjs" src="https://user-images.githubusercontent.com/67657449/100479074-23a58600-30bb-11eb-89f1-ba7e0013963e.png">
 
-link to Screencastify video: https://drive.google.com/file/d/1NhzY01NQgCRU0kEkZEtd-BVDuUGHR8ix/view
+link to Screencastify video: https://drive.google.com/file/d/1C4-VChoRz7LgFxBBf1i7wuy67to3L-xs/view
