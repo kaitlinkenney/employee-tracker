@@ -25,11 +25,14 @@ function start() {
       name: "navigate",
       type: "list",
       message: "What would you like to do?",
-      choices: ["View all employees", "Update employee role", "Add employee"]
+      choices: ["View all employees", "Update employee role", "Add employee", "Update a manager"]
     })
     .then(function (answer) {
       if (answer.navigate === "View all employees") {
         viewAllEmployees();
+      }
+      else if (answer.navigate === "Update a manager"){
+        updateManager();
       }
       else if (answer.navigate === "Update employee role") {
         updateRole();
@@ -47,19 +50,21 @@ function viewAllEmployees() {
   role.title,
   role.salary,
   department.name,
-  employee.id
+  employee.id,
+  employee.manager_id
   FROM employee
   LEFT JOIN role ON employee.role_id = role.id
   LEFT JOIN department ON role.department_id = department.id`, function (err, res) {
     if (err) throw err;
     for (let i = 0; i < res.length; i++) {
-      function Person(id, first_name, last_name, title, salary, department_name) {
+      function Person(id, first_name, last_name, title, salary, department_name, manager_id) {
         this.id = res[i].id;
         this.first_name = res[i].first_name;
         this.last_name = res[i].last_name;
         this.title = res[i].title;
         this.salary = res[i].salary;
         this.department_name = res[i].name;
+        this.manager_id = res[i].manager_id;
       }
       let data = new Person(res.id, res.first_name, res.last_name, res.title, res.salary, res.name);
       console.table([data]);
@@ -121,6 +126,57 @@ function update(rolesId, newName) {
       console.log(res.affectedRows + "employee(s) updated.\n");
     }
   )
+}
+
+function updateManager() {
+  connection.query("SELECT * FROM employee", function (err, res) {
+    if (err) throw err;
+    inquirer
+      .prompt([
+        {
+          name: "updatePrompt",
+          type: "input",
+          message: "What is the employee's id?"
+        },
+        {
+          name: "updateMgr",
+          type: "input",
+          message: "What is the new manager's id?"
+        }
+      ])
+      .then(function (answer) {
+        connection.query(
+          "UPDATE employee SET ? WHERE ?",
+          [{ manager_id: answer.updateMgr }, { id: answer.updatePrompt }],
+      
+          function (err, res) {
+            if (err) throw err;
+            console.log(res.affectedRows + "manager updated.\n");
+          }
+        )
+        // let newName = answer.updateName;
+        // let rolesId;
+        // switch (answer.updateRole) {
+        //   case "Sales Lead":
+        //     rolesId = 1;
+        //     update(rolesId, newName);
+        //     break;
+        //   case "Accountant":
+        //     rolesId = 2;
+        //     update(rolesId, newName);
+        //     break;
+        //   case "Lawyer":
+        //     rolesId = 3;
+        //     update(rolesId, newName);
+        //     break;
+        //   case "Engineer":
+        //     rolesId = 4;
+        //     update(rolesId, newName);
+        //     break;
+        // }
+
+      });
+  });
 }
 
 //adds a new employee
