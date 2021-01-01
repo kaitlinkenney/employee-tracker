@@ -154,30 +154,9 @@ function updateManager() {
       
           function (err, res) {
             if (err) throw err;
-            console.log(res.affectedRows + "manager updated.\n");
+            console.log(res.affectedRows + " manager updated.\n");
           }
         )
-        // let newName = answer.updateName;
-        // let rolesId;
-        // switch (answer.updateRole) {
-        //   case "Sales Lead":
-        //     rolesId = 1;
-        //     update(rolesId, newName);
-        //     break;
-        //   case "Accountant":
-        //     rolesId = 2;
-        //     update(rolesId, newName);
-        //     break;
-        //   case "Lawyer":
-        //     rolesId = 3;
-        //     update(rolesId, newName);
-        //     break;
-        //   case "Engineer":
-        //     rolesId = 4;
-        //     update(rolesId, newName);
-        //     break;
-        // }
-
       });
   });
 }
