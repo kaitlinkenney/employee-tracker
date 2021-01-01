@@ -25,11 +25,14 @@ function start() {
       name: "navigate",
       type: "list",
       message: "What would you like to do?",
-      choices: ["View all employees", "Update employee role", "Add employee", "Update a manager"]
+      choices: ["View all employees", "Update employee role", "Add employee", "Update a manager", "Delete an employee"]
     })
     .then(function (answer) {
       if (answer.navigate === "View all employees") {
         viewAllEmployees();
+      }
+      else if (answer.navigate === "Delete an employee"){
+        delEmployee();
       }
       else if (answer.navigate === "Update a manager"){
         updateManager();
@@ -234,4 +237,26 @@ function addEmployee() {
           )
         })
     });
+}
+
+//delete employee
+function delEmployee(){
+  inquirer
+    .prompt([
+      {
+        name: "who",
+        type: "input",
+        message: "Enter the id of the employee you would like to delete: "
+      }
+    ])
+    .then(function (answer) {
+      connection.query(
+        `DELETE FROM employee WHERE id = ${answer.who}`,
+        function (err, res) {
+            if (err) throw err;
+            console.log(res.affectedRows + " employee deleted!\n");
+        } 
+      )
+    })
+
 }

@@ -22,8 +22,8 @@ VALUES ("Legal");
 INSERT INTO role (title, salary, department_id)
 VALUES ("Lawyer", 3000, 3);
 
-INSERT INTO employee (first_name, last_name, role_id)
-VALUES ("Mary", "Major", 3);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Mary", "Major", 3, 2);
 
 INSERT INTO department (name)
 VALUES ("Engineering");
@@ -33,3 +33,6 @@ VALUES ("Engineer", 4000, 4);
 
 INSERT INTO employee (first_name, last_name, role_id)
 VALUES ("Joe", "Smith", 4);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Kaitlin", "Kenney", 3, 2)
